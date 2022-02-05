@@ -16,7 +16,7 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
-                    <GameGrid target="audio" guesses={6}/>
+                    <GameGrid target="adieu" guesses={6}/>
                 </div>
                 
             </div>
