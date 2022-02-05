@@ -1,0 +1,19 @@
+.Header-container {
+    display: flex;
+    flex-direction: column;
+    float: top;
+    user-select: none;
+    width: 350px;
+}
+
+.Header-divider {
+    border-bottom: 2px black solid;
+}
+
+.Header-title {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+    font-size: 30px;
+}

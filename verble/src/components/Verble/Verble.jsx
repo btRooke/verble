@@ -1,5 +1,6 @@
 import React from "react";
 
+import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
 
 import "./Verble.css";
@@ -11,7 +12,13 @@ class Verble extends React.Component {
         return (
 
             <div className="Verble-container">
-                <GameGrid target="audio" guesses={6}/>
+
+                <Header />
+
+                <div className="Verble-gridContainer">
+                    <GameGrid target="audio" guesses={6}/>
+                </div>
+                
             </div>
 
         );
