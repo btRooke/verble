@@ -2,6 +2,7 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
+import example from "./audio";
 
 import "./Verble.css";
 
