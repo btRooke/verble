@@ -12,7 +12,7 @@ class GameGrid extends React.Component {
 
         this.state = {
             words: [],
-            primedWord: "hello"
+            primedWord: "pears"
         };
 
     }
