@@ -1,3 +1,5 @@
+import React from "react";
+
 import GridSquare from "../GridSquare/GridSquare";
 
 import "./GridRow.css";
