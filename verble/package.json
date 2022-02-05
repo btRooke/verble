@@ -12,6 +12,7 @@
     "recordrtc": "^5.6.2",
     "web-vitals": "^2.1.4"
   },
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -35,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-react-require": "^3.1.3"
   }
 }

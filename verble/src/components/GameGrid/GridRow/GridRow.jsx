@@ -1,3 +1,5 @@
+import React from "react";
+
 import GridSquare from "../GridSquare/GridSquare";
 
 import "./GridRow.css";
@@ -14,11 +16,15 @@ function GridRow(props) {
     
             let state;
     
-            if (props.word[i] === props.target[i]) {
+            if (props.primed) {
+                state = "none";
+            }
+
+            else if (props.word[i] === props.target[i]) {
                 state = "correct";
             }
     
-            else if (props.word[i] in props.target) {
+            else if (props.target.includes(props.word[i])) {
                 state = "wrongPlace";
     
             }
@@ -30,11 +36,14 @@ function GridRow(props) {
             states.push(state);
     
         }
+        
+
+        let squares = zip(props.word.split(""), states).map(([letter, state]) => <GridSquare letter={letter} state={state}/>);
 
         return (
 
-            <div className="GridRow-container">
-                {zip(props.word, states).foreach((letter, state) => <GridSquare letter={letter} state={state}/>)}
+            <div key={props.word} className="GridRow-container">
+                {squares}
             </div>
     
         );
@@ -51,7 +60,7 @@ function GridRow(props) {
 
         return (
 
-            <div className="GridRow-container">
+            <div key={props.word} className="GridRow-container">
                 {emptyRows}
             </div>
 

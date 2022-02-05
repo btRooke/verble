@@ -1,10 +1,12 @@
+import React from "react";
+
 import "./GridSquare.css";
 
 const stateClasses = {
-    correct: "GridSquare-correct",
-    incorrect: "GridSquare-incorrect",
-    wrongPlace: "GridSquare-wrongPlace",
-    none: ""
+    "correct": "GridSquare-correct",
+    "incorrect": "GridSquare-incorrect",
+    "wrongPlace": "GridSquare-wrongPlace",
+    "none": ""
 }
 
 
