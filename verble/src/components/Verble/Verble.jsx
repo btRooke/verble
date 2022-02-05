@@ -9,6 +9,7 @@ let example = [
     ["a", "b", "c", "d", "e"],
     ["a", "b", "c", "d", "e"],
     ["a", "b", "c", "d", "e"],
+    ["a", "b", "c", "d", "e"],
     ["a", "b", "c", "d", "e"]
 ];
 
@@ -19,7 +20,7 @@ class Verble extends React.Component {
         return (
 
             <div className="Verble-container">
-                <GameGrid grid={example}/>
+                <GameGrid />
             </div>
 
         );

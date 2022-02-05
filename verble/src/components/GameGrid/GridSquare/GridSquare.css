@@ -1,4 +1,31 @@
 .GridSquare-square {
-    border: 1px grey solid;
-    padding: 10px;
+
+    user-select: none;
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px grey solid;
+    padding: 12px;
+
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: capitalize;
+
+}
+
+.GridSquare-correct {
+    background-color: lightgreen;
+}
+
+.GridSquare-incorrect {
+    background-color: darkgrey;
+}
+
+.GridSquare-wrongPlace {
+    background-color: lightyellow;
 }
