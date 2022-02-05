@@ -1,5 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://json.schemastore.org/github-workflow.json": "file:///home/billy/Documents/hack-the-burgh-2022/.github/workflows/deploy.yaml"
-    }
-}
