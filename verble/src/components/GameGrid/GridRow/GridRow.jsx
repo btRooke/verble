@@ -6,36 +6,59 @@ const zip = (a, b) => a.map((k, i) => [k, b[i]]);
 
 function GridRow(props) {
 
-    let states = [];
+    if (props.word) {
 
-    for (let i = 0; i < props.word.length(); i++) {
+        let states = [];
 
-        let state;
-
-        if (props.word[i] === props.target[i]) {
-            state = "correct";
+        for (let i = 0; i < props.word.length; i++) {
+    
+            let state;
+    
+            if (props.word[i] === props.target[i]) {
+                state = "correct";
+            }
+    
+            else if (props.word[i] in props.target) {
+                state = "wrongPlace";
+    
+            }
+    
+            else {
+                state = "incorrect";
+            }
+    
+            states.push(state);
+    
         }
 
-        else if (props.word[i] in props.target) {
-            state = "wrongPlace";
+        return (
 
-        }
-
-        else {
-            state = "incorrect";
-        }
-
-        states.push(state);
+            <div className="GridRow-container">
+                {zip(props.word, states).foreach((letter, state) => <GridSquare letter={letter} state={state}/>)}
+            </div>
+    
+        );
 
     }
 
-    return (
+    else {
 
-        <div className="GridRow-container">
-            {this.props.word.foreach(letter => <GridSquare letter={letter} state={}/>)}
-        </div>
+        let emptyRows = [];
 
-    );
+        for (let i = 0; i < props.target.length; i++) {
+            emptyRows.push(<GridSquare letter={null} state={"none"}/>);
+        }
+
+        return (
+
+            <div className="GridRow-container">
+                {emptyRows}
+            </div>
+
+        );
+
+    }
+
 }
 
 export default GridRow;

@@ -4,15 +4,6 @@ import GameGrid from "../GameGrid/GameGrid";
 
 import "./Verble.css";
 
-let example = [
-    ["a", "b", "c", "d", "e"],
-    ["a", "b", "c", "d", "e"],
-    ["a", "b", "c", "d", "e"],
-    ["a", "b", "c", "d", "e"],
-    ["a", "b", "c", "d", "e"],
-    ["a", "b", "c", "d", "e"]
-];
-
 class Verble extends React.Component {
 
     render() {
@@ -20,7 +11,7 @@ class Verble extends React.Component {
         return (
 
             <div className="Verble-container">
-                <GameGrid />
+                <GameGrid target="audio" guesses={6}/>
             </div>
 
         );

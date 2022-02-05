@@ -8,9 +8,7 @@ const stateClasses = {
 }
 
 
-function GridSquare(props) {
-
-    
+function GridSquare(props) {    
     return <div className={`GridSquare-square ${stateClasses[props.state]}`}>{props.letter}</div>
 }
 

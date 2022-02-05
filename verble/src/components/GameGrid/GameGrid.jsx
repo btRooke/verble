@@ -11,8 +11,8 @@ class GameGrid extends React.Component {
         super(props);
 
         this.size = {
-            i: 6,
-            j: 5
+            i: this.props.guesses,
+            j: this.props.target.length
         };
 
         this.state = {
@@ -34,7 +34,9 @@ class GameGrid extends React.Component {
 
         let rows = [];
 
-        for (let m = 0; m < i; i++) {
+        console.log(this.size);
+
+        for (let m = 0; m < this.size.i; m++) {
 
             if (this.state.words[m]) {
                 rows.push(<GridRow target={this.props.target} word={this.state.words[m]}/>)
