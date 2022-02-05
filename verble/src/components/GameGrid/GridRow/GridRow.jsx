@@ -25,7 +25,7 @@ function GridRow(props) {
             }
     
             else if (props.target.includes(props.word[i])) {
-                state = "wrongPlace";
+                state = "contains";
     
             }
     

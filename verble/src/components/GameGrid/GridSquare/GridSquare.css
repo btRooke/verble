@@ -26,6 +26,6 @@
     background-color: darkgrey;
 }
 
-.GridSquare-wrongPlace {
+.GridSquare-contains {
     background-color: lightyellow;
 }

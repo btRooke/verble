@@ -1,9 +1,9 @@
-import React from 'react';
-import { RecordRTCPromisesHandler, StereoAudioRecorder } from 'recordrtc';
+import React from "react";
+import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
 // Alphabetised Wordle data sets from https://gist.github.com/cfreshman
-import valid_guesses from './wordle_guesses.txt';
-import valid_answers from './wordle_answers.txt';
+import valid_guesses from "./wordle_guesses.txt";
+import valid_answers from "./wordle_answers.txt";
 
 const SAMPLERATE = 16000;
 const TOKENPORT = 3001;
@@ -11,7 +11,7 @@ const TOKENPORT = 3001;
 const listen = async () => {
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
-        alert('Browser does not support required microphone access method');
+        alert("Browser does not support required microphone access method");
         return;
     }
 
@@ -46,18 +46,18 @@ const listen = async () => {
         const res = JSON.parse(message.data);
 
         // Ignore partial transcripts
-        if (res?.message_type?.endsWith('Transcript')) {
+        if (res?.message_type?.endsWith("Transcript")) {
             console.log(`Received transcript: ${res.text}`);
 
             for (const [index, word] of res.words.entries()) {
                 // Guess keyword - check if the next word is 5 letters
-                if (word.text.toLowerCase() === 'guess' && index + 1 < res.words.length) {
+                if (word.text.toLowerCase() === "guess" && index + 1 < res.words.length) {
                     let guess = res.words[index + 1].text.toLowerCase();
 
                     if (guess.length === 5) {
                         alert(`Guessing ${guess}`);
                     } else {
-                        alert('Can only guess 5-letter words');
+                        alert("Can only guess 5-letter words");
                     }
 
                     break;
@@ -80,14 +80,14 @@ const listen = async () => {
     socket.onopen = () => {
         navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => handleAudioStream(socket, stream))
-        .catch(() => alert('Permission to use the microphone must be granted to access this page'));
+        .catch(() => alert("Permission to use the microphone must be granted to access this page"));
     };
 }
 
 const handleAudioStream = (socket, stream) => {
     let recorder = new RecordRTCPromisesHandler(stream, {
-        type: 'audio',
-        mimeType: 'audio/webm;codecs=pcm',  // Require 16 bit PCM audio
+        type: "audio",
+        mimeType: "audio/webm;codecs=pcm",  // Require 16 bit PCM audio
         recorderType: StereoAudioRecorder,
         timeSlice: 250,                     // 250 ms intervals
         desiredSampRate: SAMPLERATE,
@@ -104,7 +104,7 @@ const handleAudioStream = (socket, stream) => {
                 // Data must be sent as B64
                 if (socket && socket.readyState === socket.OPEN) {
                     socket.send(JSON.stringify({ 
-                        audio_data: base64data.split('base64,')[1],
+                        audio_data: base64data.split("base64,")[1],
                         punctuate: false,
                         format_text: false
                     }));
@@ -116,7 +116,7 @@ const handleAudioStream = (socket, stream) => {
     });
 
     recorder.startRecording();
-    console.log('Started recording audio');
+    console.log("Started recording audio");
 }
 
 class AudioTest extends React.Component {
