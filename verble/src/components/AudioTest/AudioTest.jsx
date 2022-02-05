@@ -112,7 +112,7 @@ const handleAudioStream = (socket, stream) => {
             };
             
             reader.readAsDataURL(blob);
-        } 
+        }
     });
 
     recorder.startRecording();
