@@ -10,42 +10,63 @@ class GameGrid extends React.Component {
 
         super(props);
 
-        this.size = {
-            i: this.props.guesses,
-            j: this.props.target.length
-        };
-
         this.state = {
             words: [],
-            primedWord: null
+            primedWord: "hello"
         };
 
     }
 
     play() {
-        return undefined;
+
+        if (this.state.primedWord) {
+
+            let words = this.state.words;
+            words.push(this.state.primedWord);
+    
+            this.setState({
+                words: words,
+                primedWord: null
+            });
+
+            return true;
+
+        }
+
+        else {
+            return false;
+        }
+
     }
 
     prime(word) {
-        return undefined;
+
+        if (word.length === this.props.target.length) {
+            this.setState( { primedWord: word } );
+            return true;
+        }
+
+        else {
+            return false;
+        }
+
     }
 
     generateRows() {
 
         let rows = [];
 
-        console.log(this.size);
+        this.state.words.forEach(word => {
+            rows.push(<GridRow primed={false} target={this.props.target} word={word}/>)
+        });
 
-        for (let m = 0; m < this.size.i; m++) {
+        if (this.state.primedWord) {
+            console.log(this.state.primedWord);
+            rows.push(<GridRow primed={true} target={this.props.target} word={this.state.primedWord}/>);
+        }
 
-            if (this.state.words[m]) {
-                rows.push(<GridRow target={this.props.target} word={this.state.words[m]}/>)
-            }
-
-            else {
-                rows.push(<GridRow target={this.props.target} word={null}/>) 
-            }
-
+        while (rows.length < this.props.guesses) {
+            rows.push(<GridRow primed={false} target={this.props.target} word={null}/>)
         }
 
         return rows;
@@ -54,10 +75,15 @@ class GameGrid extends React.Component {
 
     render() {
 
+        console.log(this.generateRows().length);
+
         return (
 
             <div className="GameGrid-container">
                 {this.generateRows()}
+                <input type="text" id="word"></input>
+                <button onClick={() => this.prime(document.querySelector("#word").value)}>prime</button>
+                <button onClick={() => this.play()}>play</button>
             </div>
 
 
