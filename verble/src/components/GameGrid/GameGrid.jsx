@@ -75,7 +75,6 @@ class GameGrid extends React.Component {
 
     render() {
 
-        console.log(this.generateRows().length);
 
         return (
 
