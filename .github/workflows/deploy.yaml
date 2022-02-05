@@ -1,0 +1,30 @@
+name: Deploy Site
+
+on: 
+
+  push:
+
+    branches:
+      - master
+
+jobs:
+
+  deploy-site:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout the current code
+        uses: actions/checkout@v2
+
+      - name: Build react app to static site
+        run: |
+          cd verble
+          npm install
+          npm run build
+
+      - name: Push to pages branch
+        run: |
+          git add build
+          git push -f origin pages
