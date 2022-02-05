@@ -25,9 +25,6 @@ class Verble extends React.Component {
 
         super(props);
 
-        this.target = "adieu";
-        this.guesses = 6;
-
         this.state = {
             primedWord: null,
             words: []
@@ -59,7 +56,7 @@ class Verble extends React.Component {
 
     prime(word) {
 
-        if (word.length === this.target.length) {
+        if (word.length === this.props.target.length) {
             this.setState( { primedWord: word } );
             return true;
         }
@@ -79,7 +76,7 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
-                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.target} guesses={this.guesses}/>
+                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.props.target} guesses={this.props.guesses}/>
                 </div>
 
                 <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
