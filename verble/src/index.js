@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Verble from "./components/Verble/Verble";
+import AudioTest from './components/AudioTest/AudioTest';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Verble />
+    <AudioTest />
   </React.StrictMode>,
   document.getElementById('root')
 );
