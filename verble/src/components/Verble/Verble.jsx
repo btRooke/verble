@@ -5,7 +5,70 @@ import GameGrid from "../GameGrid/GameGrid";
 
 import "./Verble.css";
 
+function TestBox(props) {
+
+    return (
+
+        <div>
+            <input type="text" id="word"/>
+            <button onClick={() => props.primeHandler(document.querySelector("#word").value)}>prime</button>
+            <button onClick={() => props.playHandler()}>play</button>
+        </div>
+
+    );
+
+}
+
 class Verble extends React.Component {
+
+    constructor(props) {
+
+        super(props);
+
+        this.target = "adieu";
+        this.guesses = 6;
+
+        this.state = {
+            primedWord: null,
+            words: []
+        }
+
+    }
+
+    play() {
+
+        if (this.state.primedWord) {
+
+            let words = this.state.words;
+            words.push(this.state.primedWord);
+    
+            this.setState({
+                words: words,
+                primedWord: null
+            });
+
+            return true;
+
+        }
+
+        else {
+            return false;
+        }
+
+    }
+
+    prime(word) {
+
+        if (word.length === this.target.length) {
+            this.setState( { primedWord: word } );
+            return true;
+        }
+
+        else {
+            return false;
+        }
+
+    }
 
     render() {
 
@@ -16,8 +79,10 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
-                    <GameGrid target="adieu" guesses={6}/>
+                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.target} guesses={this.guesses}/>
                 </div>
+
+                <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
                 
             </div>
 
