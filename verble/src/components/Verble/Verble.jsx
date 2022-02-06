@@ -17,6 +17,13 @@ const SAMPLE_RATE = 16000;
 
 function Indicator(props) {
 
+    if (props.succ) {
+        setTimeout(
+            () => props.resetCb(),
+            400
+        );
+    }
+
     if (props.error) {
         setTimeout(
             () => props.resetCb(),
@@ -26,7 +33,7 @@ function Indicator(props) {
 
     return (
 
-        <div className={`Verble-micContainer ${props.error ? "Verble-error" : ""}`}>
+        <div className={`Verble-micContainer ${props.succ ? "Verble-succ" : ""} ${props.error ? "Verble-error" : ""}`}>
             <span class="material-icons Verble-mic">mic</span>
         </div>
         
@@ -41,6 +48,7 @@ class Verble extends React.Component {
         super(props);
 
         this.state = {
+            succ: false,
             target: null,
             finished: false,
             primedWord: null,
@@ -177,7 +185,7 @@ class Verble extends React.Component {
 
                 <div className="Verble-gridContainer">
                     {this.renderGrid()}
-                    <Indicator error={this.state.vocalError} resetCb={() => this.setState({vocalError: false})}/>
+                    <Indicator error={this.state.vocalError} resetCb={() => this.setState({succ: false, vocalError: false})}/>
                 </div>
 
                 
