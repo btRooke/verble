@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 
-const PORT = 3001;
+const PORT = 3002;
 
 if (process.argv.length != 3) {
     console.log(`Expected 1 command line argument, got ${process.argv.length - 2}`);

@@ -6,9 +6,9 @@ import "./GameGrid.css";
 
 class GameGrid extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+    //constructor(props) {
+    //    super(props);
+    //}
 
     generateRows() {
 

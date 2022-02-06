@@ -2,15 +2,15 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
-import Modal from "../Modal/Modal";
-import Audio from "./Audio";
+//import Modal from "../Modal/Modal";
+import listen from "./Audio";
 
 import "./Verble.css";
 
-const TOKEN_URL = "http://localhost:3001";
+const TOKEN_URL = "http://localhost:3002";
 const SAMPLE_RATE = 16000;
 
-function TestBox(props) {
+/*function TestBox(props) {
 
     return (
 
@@ -22,7 +22,7 @@ function TestBox(props) {
 
     );
 
-}
+}*/
 
 class Verble extends React.Component {
 
@@ -38,7 +38,7 @@ class Verble extends React.Component {
     }
 
     componentDidMount() {
-        Audio.listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word), () => this.play());
+        listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word), () => this.play());
     }
 
     play() {
@@ -54,7 +54,6 @@ class Verble extends React.Component {
             });
 
             return true;
-
         }
 
         else {
@@ -88,9 +87,10 @@ class Verble extends React.Component {
                     <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.props.target} guesses={this.props.guesses}/>
                 </div>
 
+                {/* 
                 <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
 
-                {/* <Modal>
+                <Modal>
                     <div style={{height: "100px", width: "100px"}}>test</div>
                 </Modal> */}
 
