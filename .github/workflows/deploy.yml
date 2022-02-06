@@ -21,6 +21,7 @@ jobs:
 
       - name: Build react app to static site
         run: |
+          git fetch --all
           git checkout pages
           cd verble
           npm install
