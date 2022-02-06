@@ -21,9 +21,11 @@ jobs:
 
       - name: Build react app to static site
         run: |
+          git push -d <remote_name> <branchname>
+          git branch -d <branchname>
           git fetch --all
+          git branch pages
           git checkout pages
-          git reset --hard origin/main
           cd verble
           npm install
           CI="" npm run build
@@ -33,4 +35,4 @@ jobs:
           git config --global user.name "the repo"
           git add *
           git commit -m "Build"
-          git push -f --set-upstream origin pages
+          git push --set-upstream origin pages
