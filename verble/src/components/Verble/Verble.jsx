@@ -8,7 +8,7 @@ import listen from "./Audio";
 import "./Verble.css";
 
 // Alphabetised Wordle data sets from https://gist.github.com/cfreshman
-import solutions from "./words_solutions.txt";
+import solutions from "./wordle_solutions.txt";
 import valid_guesses from "./wordle_guesses.txt";
 import valid_answers from "./wordle_answers.txt";
 
@@ -31,13 +31,12 @@ const SAMPLE_RATE = 16000;
 
 class Verble extends React.Component {
 
-    solution = null;
-
     constructor(props) {
 
         super(props);
 
         this.state = {
+            target: null,
             finished: false,
             primedWord: null,
             words: []
@@ -47,9 +46,11 @@ class Verble extends React.Component {
         let firstDay = new Date(2021, 5, 19, 0, 0, 0, 0).getTime();
         let index = Math.floor((today - firstDay) / 864e5);
 
-        fetch(solutions)
-        .then(solution_res => solution_res.text())
-        .then(solns => this.solution = solns.split(/(?:\r?\n)+/).map(word => word.trim())[index]);
+        this.setState(() => ({
+            target: fetch(solutions)
+                .then(solution_res => solution_res.text())
+                .then(targets => targets.split(/(?:\r?\n)+/).map(word => word.trim())[index])
+        }));
     }
 
     componentDidMount() {
@@ -59,14 +60,13 @@ class Verble extends React.Component {
         const play_cb = () => this.play();
         const finish_cb = () => this.finish();
 
-        // Get all valid words
+        // Get all valid words and solutions
         fetch(valid_guesses)
         .then(guess_res => guess_res.text())
         .then(guesses => {
             fetch(valid_answers)
             .then(answer_res => answer_res.text())
-            .then(answers => {
-
+            .then(answers => { 
                 guesses.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
                 answers.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
                 console.log(`Loaded ${valid_words.size} words`);
@@ -78,7 +78,7 @@ class Verble extends React.Component {
 
     prime(word, valid_words) {
 
-        if (word.length === this.solution.length && valid_words.has(word)) {
+        if (word.length === this.state.target.length && valid_words.has(word)) {
             this.setState( { primedWord: word } );
             return true;
         }
@@ -109,7 +109,7 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.primedWord && (this.state.primedWord === this.solution || this.state.words.length === this.props.guesses)) {
+        if (this.state.primedWord && (this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses)) {
             return true;
         }
 
@@ -118,6 +118,9 @@ class Verble extends React.Component {
     }
 
     render() {
+        if (this.state.target === null) {
+            return null;
+        }
 
         return (
 
@@ -126,7 +129,7 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
-                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.solution} guesses={this.props.guesses}/>
+                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.state.target} guesses={this.props.guesses}/>
                 </div>
 
                 {/* 
