@@ -49,15 +49,7 @@ class Verble extends React.Component {
             vocalError: false
         }
 
-        let today = new Date().getTime() - 18000000;
-        let firstDay = new Date(2021, 5, 19, 0, 0, 0, 0).getTime();
-        let index = Math.floor((today - firstDay) / 864e5);
 
-        this.setState(() => ({
-            target: fetch(solutions)
-                .then(solution_res => solution_res.text())
-                .then(targets => targets.split(/(?:\r?\n)+/).map(word => word.trim())[index])
-        }));
     }
 
     vocalError() {
@@ -88,6 +80,14 @@ class Verble extends React.Component {
         });
 
         setalertHandler(msg => this.setState({modalMessage: msg}));
+
+        let today = new Date().getTime() - 18000000;
+        let firstDay = new Date(2021, 5, 19, 0, 0, 0, 0).getTime();
+        let index = Math.floor((today - firstDay) / 864e5);
+
+        fetch(solutions)
+        .then(solution_res => solution_res.text())
+        .then(targets => this.setState({target: targets.split(/(?:\r?\n)+/).map(word => word.trim())[index]}));
     }
 
     prime(word, valid_words) {
@@ -147,6 +147,18 @@ class Verble extends React.Component {
 
     }
 
+    renderGrid() {
+
+        if (this.state.target) {
+            return <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.state.target} guesses={this.props.guesses}/>;
+        }
+
+        else {
+            return <div><span>hourglass_bottom</span></div>
+        }
+        
+    }
+
     render() {
         if (this.state.target === null) {
             return null;
@@ -159,8 +171,8 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
+                    {this.renderGrid()}
                     <Indicator error={this.state.vocalError} resetCb={() => this.setState({vocalError: false})}/>
-                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.state.target} guesses={this.props.guesses}/>
                 </div>
 
                 

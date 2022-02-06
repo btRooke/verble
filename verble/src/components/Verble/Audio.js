@@ -1,7 +1,7 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
-const prime_keywords = ["guess", "try"];
-const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay"];
+const prime_keywords = ["guess", "try", "use", "pick"];
+const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay", "nice"];
 
 let alertHandler = msg => alertHandler(msg);
 
