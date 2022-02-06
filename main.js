@@ -2,20 +2,13 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 
-let PORT = 3000;
-
-let TOKEN;
-
-if (process.argv.length != 3) {
-    console.log(`Expected 1 command line argument, got ${process.argv.length - 2}`);
-    console.log("Usage: node server.js <API Key>");
-    TOKEN = process.env.API_KEY;
-    PORT = process.env.PORT;
+if (process.argv.length < 3 && !process.env?.API_KEY) {
+    console.log(`Expected API key in command line argument or environment var API_KEY`);
+    process.exit(1);
 }
 
-else {
-    process.argv[2];
-}
+let TOKEN = process.env?.API_KEY ?? process.argv[2];
+let PORT = process.env?.PORT ?? 3000;
 
 const app = express();
 app.use(express.json());

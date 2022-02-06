@@ -8,6 +8,7 @@ import listen, { setalertHandler }from "./Audio";
 import "./Verble.css";
 
 // Alphabetised Wordle data sets from https://gist.github.com/cfreshman
+import solutions from "./words_solutions.txt";
 import valid_guesses from "./wordle_guesses.txt";
 import valid_answers from "./wordle_answers.txt";
 
@@ -35,6 +36,8 @@ function Indicator(props) {
 
 class Verble extends React.Component {
 
+    solution = null;
+
     constructor(props) {
 
         super(props);
@@ -47,6 +50,13 @@ class Verble extends React.Component {
             vocalError: false
         }
 
+        let today = new Date().getTime() - 18000000;
+        let firstDay = new Date(2021, 5, 19, 0, 0, 0, 0).getTime();
+        let index = Math.floor((today - firstDay) / 864e5);
+
+        fetch(solutions)
+        .then(solution_res => solution_res.text())
+        .then(solns => this.solution = solns.split(/(?:\r?\n)+/).map(word => word.trim())[index]);
     }
 
     vocalError() {
@@ -63,9 +73,7 @@ class Verble extends React.Component {
 
         // Get all valid words
         fetch(valid_guesses)
-
         .then(guess_res => guess_res.text())
-        
         .then(guesses => {
             fetch(valid_answers)
             .then(answer_res => answer_res.text())
@@ -84,7 +92,7 @@ class Verble extends React.Component {
 
     prime(word, valid_words) {
 
-        if (word.length === this.props.target.length && valid_words.has(word)) {
+        if (word.length === this.solution.length && valid_words.has(word)) {
             this.setState( { primedWord: word } );
             return true;
         }
@@ -115,7 +123,7 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.primedWord && (this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses)) {
+        if (this.state.primedWord && (this.state.primedWord === this.solution || this.state.words.length === this.props.guesses)) {
             return true;
         }
 
@@ -148,8 +156,8 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
-                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.props.target} guesses={this.props.guesses}/>
                     <Indicator error={this.state.vocalError} resetCb={() => this.setState({vocalError: false})}/>
+                    <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.solution} guesses={this.props.guesses}/>
                 </div>
 
                 
