@@ -1,10 +1,10 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
 const prime_keywords = ["guess", "try", "use", "pick", "consider", "perhaps", "suggest"];
-const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay", "nice"];
+const play_keywords = ["cool", "good", "submit", "confirm", "okay", "nice", "excellent", "perfect"];
 const close_keywords = ["close", "exit", "quit"];
 
-let alertHandler = msg => alertHandler(msg);
+let alertHandler = msg => alert(msg);
 
 export function setalertHandler(func) {
     alertHandler = func;
