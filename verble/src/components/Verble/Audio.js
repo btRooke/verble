@@ -80,7 +80,6 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
                     let guess = res.words[index + 1].text.toLowerCase();
                     prime_cb(guess);
-                    break;
                 }
 
                 // Play guess
@@ -90,8 +89,6 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                     if (finish_cb()) {
                         socket.close();
                     }
-
-                    break;
                 }
             }
         }
