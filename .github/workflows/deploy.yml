@@ -28,6 +28,8 @@ jobs:
           CI="" npm run build
           mv -f build/* ../
           cd ..
+          git config --global user.email "repo@this.com"
+          git config --global user.name "the repo"
           git add *
           git commit -m "Build"
           git push -f origin pages
