@@ -2,6 +2,7 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
+//import Modal from "../Modal/Modal";
 import listen from "./Audio";
 
 import "./Verble.css";
@@ -86,10 +87,13 @@ class Verble extends React.Component {
                     <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.props.target} guesses={this.props.guesses}/>
                 </div>
 
-                {
-                    //<TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
-                }
-                
+                {/* 
+                <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
+
+                <Modal>
+                    <div style={{height: "100px", width: "100px"}}>test</div>
+                </Modal> */}
+
             </div>
 
         );

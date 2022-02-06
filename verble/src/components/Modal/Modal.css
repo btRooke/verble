@@ -1,0 +1,56 @@
+.Modal-outer {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Modal-closeContainer {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Modal-closeButton {
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    transition: 250ms;
+    padding: 5px 8px 5px 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.Modal-closeButton:hover {
+    background-color: rgb(158, 158, 158);
+    transition: 250ms;
+    border-radius: 10px;
+}
+
+.Modal-inner {
+
+    max-width: 300px;
+
+    background-color: aliceblue;
+    box-shadow: 0 0 15px 10px #535353;
+    border-radius: 15px;
+
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: 35px auto 35px;
+    grid-template-rows: 35px auto 35px;
+
+}
+
+.Modal-inner-inner {
+
+    grid-column: 2  / 3;
+    grid-row: 2  / 3;
+
+}
