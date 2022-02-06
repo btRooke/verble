@@ -122,7 +122,13 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.words.at(-1) === this.state.target || this.state.words.length === this.props.guesses) {
+        if (this.state.words.at(-1) === this.state.target) {
+            this.setState({ modalMessage: `The game is over. You guessed the word in ${this.state.words.length} guesses!`});
+            return true;
+        }
+
+        else if (this.state.words.length === this.props.guesses) {
+            this.setState({ modalMessage: `The game is over. You didn't guess the word - it was ${this.state.target}.`});
             return true;
         }
 

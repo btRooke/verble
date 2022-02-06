@@ -43,7 +43,7 @@ const handleAudioStream = (socket, stream, samples) => {
     return recorder;
 }
 
-export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, err_cb) {
+export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, phrase_cb, err_cb) {
 
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
@@ -81,6 +81,10 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         if (res?.message_type?.endsWith("Transcript")) {
             console.log(`Received transcript: ${res.text}`);
 
+            if (res.message_type === "FinalTranscript") {
+                phrase_cb(res.text);
+            }
+
             for (const [index, word] of res.words.entries()) {
                 // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
@@ -98,11 +102,9 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                 }
             }
 
-
             if (res.text.length > 0) {
                 err_cb();
             }
-
         }
 
         else if (res?.hasOwnProperty("error")) {
