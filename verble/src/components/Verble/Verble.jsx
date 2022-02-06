@@ -68,6 +68,7 @@ class Verble extends React.Component {
             return true;
         }
         
+        alert("Invalid guess");
         return false;
 
     }
@@ -87,6 +88,7 @@ class Verble extends React.Component {
             return true;
         }
 
+        alert("No word primed");
         return false;
 
     }
@@ -94,8 +96,9 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.primedWord) {
-            return this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses;
+        if (this.state.primedWord && (this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses)) {
+            alert("Done");
+            return true;
         }
 
         return false;

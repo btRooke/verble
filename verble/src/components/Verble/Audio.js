@@ -48,7 +48,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
 
     // Query token server for session token
     let data;
-    
+
     try {
         const response = await fetch(token_url);
         data = await response.json();
@@ -58,7 +58,6 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         return;
     }
     
-
     // Create WebSocket for AssemblyAI realtime
     let params = {
         token: data.token,
@@ -80,25 +79,19 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
             for (const [index, word] of res.words.entries()) {
                 // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
-                    let guess = res.words[index + 1].text.toLowerCase();
-                    
-                    if (!prime_cb(guess)) {
-                        alert("Invalid guess");
-                    }
+                    let guess = res.words[index + 1].text.toLowerCase();     
+                    prime_cb(guess);
                     break;
                 }
 
                 // Play guess
                 else if (play_keywords.includes(word.text.toLowerCase())) {
-                    if (!play_cb()) {
-                        alert("No word primed!");
-                    }
+                    play_cb();
 
                     if (finish_cb()) {
-                        alert("Done");
                         socket.close();
                     }
-
+                    
                     break;
                 }
             }
