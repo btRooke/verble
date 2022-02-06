@@ -27,7 +27,7 @@ jobs:
           cd verble
           npm install
           CI="" npm run build
-          mv build/* ../
+          mv -f build/* ../
           cd ..
           git add *
           git commit -m "Build"
