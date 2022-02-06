@@ -79,14 +79,12 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                 // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
                     let guess = res.words[index + 1].text.toLowerCase();
-                    console.log(guess);
                     prime_cb(guess);
                     break;
                 }
 
                 // Play guess
                 else if (play_keywords.includes(word.text.toLowerCase())) {
-                    console.log("Playing guess")
                     play_cb();
 
                     if (finish_cb()) {
@@ -99,6 +97,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         }
 
         else if (res?.hasOwnProperty("error")) {
+            socket.close();
             alert(res.error);
         }
 
