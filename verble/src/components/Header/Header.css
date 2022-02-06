@@ -18,12 +18,15 @@
     font-size: 30px;
 }
 
-.Header-textthing {
-    transition: 500ms;
+.Header-textThing {
+    padding: 10px;
+    transition: 1000ms;
     color: white;
+    text-align: center;
+    text-overflow: ellipsis;
 }
 
 .Header-active {
-    transition: 500ms;
+    transition: 1000ms;
     color: black;
 }

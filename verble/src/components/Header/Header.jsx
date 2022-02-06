@@ -2,16 +2,24 @@ import React from "react";
 
 import "./Header.css";
 
-function show(message) {
+export function show(message) {
 
-    const thing = document.querySelector("#thing");
-    thing.innerHTML = message;
-    thing.setAttribute("class", "Header-textThing active");
+    if (message) {
 
-    setTimeout(
-        () => thing.setAttribute("class", "Header-textThing"),
-        3000 
-    );
+        console.log(message);
+
+        const thing = document.querySelector("#thing");
+        thing.innerHTML = message;
+        thing.setAttribute("class", "Header-textThing Header-active");
+    
+        setTimeout(
+            () => thing.setAttribute("class", "Header-textThing"),
+            5000 
+        );
+
+    }
+
+
 
 }
 

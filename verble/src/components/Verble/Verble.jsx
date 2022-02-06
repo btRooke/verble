@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../Header/Header";
+import Header, {show} from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
 import Modal from "../Modal/Modal";
 import listen, { setalertHandler }from "./Audio";
@@ -16,6 +16,7 @@ const TOKEN_URL = "https://verble.herokuapp.com/token";
 const SAMPLE_RATE = 16000;
 
 function Indicator(props) {
+
 
     if (props.succ) {
         setTimeout(
@@ -70,6 +71,7 @@ class Verble extends React.Component {
         const play_cb = () => this.play();
         const finish_cb = () => this.finish(); 
         const err_cb = () => this.vocalError();
+        const phrase_cb = s => show(s);
 
         // Get all valid words and solutions
         fetch(valid_guesses)
@@ -82,7 +84,7 @@ class Verble extends React.Component {
                 answers.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
                 console.log(`Loaded ${valid_words.size} words`);
         
-                listen(TOKEN_URL, SAMPLE_RATE, prime_cb, play_cb, finish_cb, err_cb);
+                listen(TOKEN_URL, SAMPLE_RATE, prime_cb, play_cb, finish_cb, phrase_cb, err_cb);
             });
         });
 
@@ -100,7 +102,7 @@ class Verble extends React.Component {
     prime(word, valid_words) {
 
         if (word.length === this.state.target.length && valid_words.has(word)) {
-            this.setState( { primedWord: word } );
+            this.setState( { primedWord: word, succ: true } );
             return true;
         }
         
@@ -117,7 +119,8 @@ class Verble extends React.Component {
     
             this.setState({
                 words: words,
-                primedWord: null
+                primedWord: null,
+                succ: true
             });
 
             return true;
@@ -130,13 +133,7 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.words.at(-1) === this.state.target) {
-            this.setState({ modalMessage: `The game is over. You guessed the word in ${this.state.words.length} guesses!`});
-            return true;
-        }
-
-        else if (this.state.words.length === this.props.guesses) {
-            this.setState({ modalMessage: `The game is over. You didn't guess the word - it was ${this.state.target}.`});
+        if (this.state.words.at(-1) === this.state.target || this.state.words.length === this.props.guesses) {
             return true;
         }
 
@@ -185,7 +182,7 @@ class Verble extends React.Component {
 
                 <div className="Verble-gridContainer">
                     {this.renderGrid()}
-                    <Indicator error={this.state.vocalError} resetCb={() => this.setState({succ: false, vocalError: false})}/>
+                    <Indicator succ={this.state.succ} error={this.state.vocalError} resetCb={() => this.setState({succ: false, vocalError: false})}/>
                 </div>
 
                 

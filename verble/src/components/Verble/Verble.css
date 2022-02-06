@@ -18,6 +18,13 @@
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
+.Verble-succ {
+    background-color: green;
+    animation-name: wobble;
+    animation: shake 0.4s;
+    animation-iteration-count: infinite;
+}
+
 .Verble-error {
     background-color: rgb(255, 117, 129);
     animation-name: wobble;
