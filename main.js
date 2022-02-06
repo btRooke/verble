@@ -17,8 +17,6 @@ else {
     process.argv[2];
 }
 
-
-
 const app = express();
 app.use(express.json());
 app.use(cors());

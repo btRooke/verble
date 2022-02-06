@@ -1,6 +1,6 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
-const prime_keywords = ["guess", "try"];
+const prime_keywords = ["guess", "try", "use"];
 const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay"];
 
 const handleAudioStream = (socket, stream, samples) => {
