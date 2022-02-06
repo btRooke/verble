@@ -23,8 +23,8 @@ jobs:
         run: |
           cd verble
           npm install
-          npm run build
-          
+          CI="" npm run build
+
       - name: Push to pages branch
         run: |
           git add build
