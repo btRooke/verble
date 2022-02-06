@@ -17,3 +17,13 @@
     padding: 10px;
     font-size: 30px;
 }
+
+.Header-textthing {
+    transition: 500ms;
+    color: white;
+}
+
+.Header-active {
+    transition: 500ms;
+    color: black;
+}
