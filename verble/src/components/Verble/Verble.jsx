@@ -11,7 +11,7 @@ import "./Verble.css";
 import valid_guesses from "./wordle_guesses.txt";
 import valid_answers from "./wordle_answers.txt";
 
-const TOKEN_URL = "https://melbourneplace.net/verble";
+const TOKEN_URL = "http://localhost:3002";
 const SAMPLE_RATE = 16000;
 
 /*function TestBox(props) {
