@@ -44,6 +44,10 @@ class Verble extends React.Component {
     componentDidMount() {
         let valid_words = new Set();
 
+        const prime_cb = word => this.prime(word, valid_words);
+        const play_cb = () => this.play();
+        const finish_cb = () => this.finish(); 
+
         // Get all valid words
         fetch(valid_guesses)
 
@@ -58,7 +62,7 @@ class Verble extends React.Component {
                 answers.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
                 console.log(`Loaded ${valid_words.size} words`);
         
-                listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word, valid_words), () => this.play(), () => this.finish());
+                listen(TOKEN_URL, SAMPLE_RATE, prime_cb, play_cb, finish_cb);
             });
         });
     }
