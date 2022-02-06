@@ -2,6 +2,7 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
+import Modal from "../Modal/Modal";
 import example from "./audio";
 
 import "./Verble.css";
@@ -81,7 +82,9 @@ class Verble extends React.Component {
                 </div>
 
                 <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
-                
+
+                <Modal/>
+
             </div>
 
         );

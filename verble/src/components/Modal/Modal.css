@@ -1,0 +1,15 @@
+.Modal-outer {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Modal-inner {
+    width: 200px;
+    height: 200px;
+}
