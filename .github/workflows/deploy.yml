@@ -21,8 +21,8 @@ jobs:
 
       - name: Build react app to static site
         run: |
-          git push -d origin pages
-          git branch -d pages
+          git push -f -d origin pages
+          git branch -f -d pages
           git fetch --all
           git branch pages
           git checkout pages
