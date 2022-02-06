@@ -7,7 +7,7 @@ import listen from "./Audio";
 
 import "./Verble.css";
 
-const TOKEN_URL = "http://localhost:3002";
+const TOKEN_URL = "https://melbourneplace.net/verble";
 const SAMPLE_RATE = 16000;
 
 /*function TestBox(props) {
