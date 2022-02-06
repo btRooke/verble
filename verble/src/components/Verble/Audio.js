@@ -1,9 +1,5 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
-// Alphabetised Wordle data sets from https://gist.github.com/cfreshman
-import valid_guesses from "./wordle_guesses.txt";
-import valid_answers from "./wordle_answers.txt";
-
 const prime_keywords = ["guess, try"];
 const play_keywords = ["cool, good, submit, go, confirm, okay"];
 
@@ -40,27 +36,15 @@ const handleAudioStream = (socket, stream, samples) => {
 
     recorder.startRecording();
     console.log("Started recording audio");
+    return recorder;
 }
 
-export default async function listen(token_url, samples, prime_cb, play_cb) {
+export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb) {
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
         alert("Browser does not support required microphone access method");
         return;
     }
-
-    // Get all valid words
-    let words = new Set();
-
-    let guess_res = await fetch(valid_guesses);
-    let guesses = await guess_res.text();
-
-    let answer_res = await fetch(valid_answers);
-    let answers = await answer_res.text();
-    
-    guesses.split(/(?:\r?\n)+/).forEach(word => words.add(word.trim()));
-    answers.split(/(?:\r?\n)+/).forEach(word => words.add(word.trim()));
-    console.log(`Loaded ${words.size} words`);
 
     // Query token server for session token
     const response = await fetch(token_url);
@@ -74,6 +58,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb) {
     }
 
     let socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?${new URLSearchParams(params).toString()}`);
+    let recorder;
     
     // Handle incoming transcripts
     socket.onmessage = message => {
@@ -84,18 +69,34 @@ export default async function listen(token_url, samples, prime_cb, play_cb) {
             console.log(`Received transcript: ${res.text}`);
 
             for (const [index, word] of res.words.entries()) {
-                // Guess keyword - check if the next word is 5 letters
+                // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
                     let guess = res.words[index + 1].text.toLowerCase();
-                    prime_cb(guess);
+                    
+                    if (!prime_cb(guess)) {
+                        alert("Invalid guess");
+                    }
                     break;
                 }
 
+                // Play guess
                 else if (play_keywords.includes(word.text.toLowerCase())) {
-                    play_cb();
+                    if (!play_cb()) {
+                        alert("No word primed!");
+                    }
+
+                    if (finish_cb()) {
+                        alert("Done");
+                        socket.close();
+                    }
+
                     break;
                 }
             }
+        }
+
+        else if (res?.hasOwnProperty("error")) {
+            alert(res.error);
         }
 
         return false;
@@ -107,12 +108,15 @@ export default async function listen(token_url, samples, prime_cb, play_cb) {
     }
 
     socket.onclose = () => {
+        if (!recorder) {
+            recorder.stopRecording();
+        }
         socket = null;
     }
 
     socket.onopen = () => {
         navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => handleAudioStream(socket, stream, samples))
+        .then(stream => recorder = handleAudioStream(socket, stream, samples))
         .catch(() => alert("Permission to use the microphone must be granted to access this page"));
     };
 }

@@ -7,6 +7,10 @@ import listen from "./Audio";
 
 import "./Verble.css";
 
+// Alphabetised Wordle data sets from https://gist.github.com/cfreshman
+import valid_guesses from "./wordle_guesses.txt";
+import valid_answers from "./wordle_answers.txt";
+
 const TOKEN_URL = "https://melbourneplace.net/verble";
 const SAMPLE_RATE = 16000;
 
@@ -26,19 +30,48 @@ const SAMPLE_RATE = 16000;
 
 class Verble extends React.Component {
 
+    words = new Set();
+
     constructor(props) {
 
         super(props);
 
         this.state = {
+            finished: false,
             primedWord: null,
             words: []
         }
-
     }
 
     componentDidMount() {
-        listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word), () => this.play());
+        let valid_guesses = new Set();
+
+        // Get all valid words
+        fetch(valid_guesses)
+        .then(guess_res => guess_res.text())
+        .then(guesses => {
+            fetch(valid_answers)
+            .then(answer_res => answer_res.text())
+            .then(answers => {
+
+                guesses.split(/(?:\r?\n)+/).forEach(word => valid_guesses.add(word.trim()));
+                answers.split(/(?:\r?\n)+/).forEach(word => valid_guesses.add(word.trim()));
+                console.log(`Loaded ${valid_guesses.size} words`);
+        
+                listen(TOKEN_URL, SAMPLE_RATE, (word, valid_guesses) => this.prime(word, valid_guesses), () => this.play(), () => this.finish());
+            });
+        });
+    }
+
+    prime(word, valid_guesses) {
+
+        if (word.length === this.props.target.length && valid_guesses.has(word)) {
+            this.setState( { primedWord: word } );
+            return true;
+        }
+        
+        return false;
+
     }
 
     play() {
@@ -56,22 +89,18 @@ class Verble extends React.Component {
             return true;
         }
 
-        else {
-            return false;
-        }
+        return false;
 
     }
 
-    prime(word) {
+    finish() {
 
-        if (word.length === this.props.target.length) {
-            this.setState( { primedWord: word } );
-            return true;
+        // Game is finished if the words match or the number of guesses is exceeded
+        if (this.state.primedWord) {
+            return this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses;
         }
 
-        else {
-            return false;
-        }
+        return false;
 
     }
 
@@ -92,7 +121,8 @@ class Verble extends React.Component {
 
                 <Modal>
                     <div style={{height: "100px", width: "100px"}}>test</div>
-                </Modal> */}
+                </Modal> 
+                */}
 
             </div>
 
