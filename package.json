@@ -1,0 +1,29 @@
+{
+  "name": "verble",
+  "version": "1.0.0",
+  "description": "Wordle but verble.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "preinstall": "npm run build",
+    "build": "npm install --prefix verble; npm run build --prefix verble; rsync -r verble/build/* build;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btRooke/hack-the-burgh-2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/btRooke/hack-the-burgh-2022/issues"
+  },
+  "homepage": "https://github.com/btRooke/hack-the-burgh-2022#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.2"
+  },
+  "engines": { 
+    "node": "16.x"
+  }
+}
