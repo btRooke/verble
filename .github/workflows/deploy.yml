@@ -27,5 +27,5 @@ jobs:
 
       - name: Push to pages branch
         run: |
-          git add build
+          git add -f build
           git push -f origin pages
