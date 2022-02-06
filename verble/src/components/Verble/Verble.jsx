@@ -155,7 +155,7 @@ class Verble extends React.Component {
             return (
 
                 <Modal emptyHandler={() => this.setState({modalMessage: null})}>
-                    <div dangerouslySetInnerHTML={this.state.modalMessage}/>
+                    <div>{this.state.modalMessage}</div>
                 </Modal> 
 
             );
