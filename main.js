@@ -10,7 +10,7 @@ if (process.argv.length != 3) {
     console.log(`Expected 1 command line argument, got ${process.argv.length - 2}`);
     console.log("Usage: node server.js <API Key>");
     TOKEN = process.env.API_KEY;
-    PORT = 80
+    PORT = process.env.PORT;
 }
 
 else {
