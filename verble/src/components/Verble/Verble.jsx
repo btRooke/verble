@@ -3,7 +3,7 @@ import React from "react";
 import Header, {show} from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
 import Modal from "../Modal/Modal";
-import listen, { setalertHandler }from "./Audio";
+import listen, { setalertHandler } from "./Audio";
 
 import "./Verble.css";
 
@@ -89,6 +89,7 @@ class Verble extends React.Component {
         });
 
         setalertHandler(msg => this.setState({modalMessage: msg}));
+        
 
         let today = new Date().getTime() - 18000000;
         let firstDay = new Date(2021, 5, 19, 0, 0, 0, 0).getTime();

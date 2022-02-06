@@ -137,5 +137,12 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => recorder = handleAudioStream(socket, stream, samples))
         .catch(() => alertHandler("Permission to use the microphone must be granted to access this page"));
+
+        alertHandler(
+            "VERBLE\n\n" + 
+            "To prepare a guess, say a prepare keyword followed by your guess. If it is a valid guess, it will appear in the grid\n" +
+            `Valid prepare keywords are: ${prime_keywords.join(", ")}\n\n` +
+            `To submit the guess, say one of: ${play_keywords.join(", ")}\n\n` +
+            `These dialogues can also be voice controlled - try closing it using one of: ${close_keywords.join(", ")}`);
     };
 }
