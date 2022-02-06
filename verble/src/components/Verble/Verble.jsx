@@ -90,7 +90,9 @@ class Verble extends React.Component {
 
                 <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
 
-                <Modal/>
+                {/* <Modal>
+                    <div style={{height: "100px", width: "100px"}}>test</div>
+                </Modal> */}
 
             </div>
 

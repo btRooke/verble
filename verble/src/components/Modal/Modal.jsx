@@ -8,10 +8,18 @@ class Modal extends React.Component {
 
         return (
 
-            <div className="Modal-outer">
+            <div id="modal" className="Modal-outer">
 
                 <div className="Modal-inner">
-                    Hello
+
+                    <div className="Modal-closeContainer Modal-gridCentre">
+                        <div onClick={() => this.hide()} className="Modal-closeButton">X</div>
+                    </div>
+
+                    <div className="Modal-inner-inner">
+                        {this.props.children}
+                    </div>
+
                 </div>
 
             </div>

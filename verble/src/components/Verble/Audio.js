@@ -46,7 +46,7 @@ class Audio {
             const res = JSON.parse(message.data);
 
             // Ignore partial transcripts
-            if (res?.message_type?.endsWith("Transcript")) {
+            if (res?.message_type?.endsWith("FinalTranscript")) {
                 console.log(`Received transcript: ${res.text}`);
 
                 for (const [index, word] of res.words.entries()) {
