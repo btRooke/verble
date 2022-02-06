@@ -14,7 +14,9 @@ const TOKEN = process.argv[2];
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'https://verble.tech'
+}));
 
 app.get("/", async (req, res) => {
     try {
