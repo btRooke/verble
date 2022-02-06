@@ -21,18 +21,16 @@ jobs:
 
       - name: Build react app to static site
         run: |
-          git push -f -d origin pages
-          git branch -f -d pages
           git fetch --all
-          git branch pages
           git checkout pages
           cd verble
           npm install
           CI="" npm run build
-          mv -f build/* ../
+          mv build/* ../
           cd ..
-          git config --global user.email "repo@this.com"
-          git config --global user.name "the repo"
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           git add *
           git commit -m "Build"
-          git push --set-upstream origin pages
+          git push --set-upstream -f origin pages 
+          
