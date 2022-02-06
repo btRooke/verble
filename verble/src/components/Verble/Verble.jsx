@@ -49,7 +49,6 @@ class Verble extends React.Component {
             vocalError: false
         }
 
-
     }
 
     vocalError() {
@@ -123,7 +122,7 @@ class Verble extends React.Component {
     finish() {
 
         // Game is finished if the words match or the number of guesses is exceeded
-        if (this.state.primedWord && (this.state.primedWord === this.state.target || this.state.words.length === this.props.guesses)) {
+        if (this.state.words.at(-1) === this.state.target || this.state.words.length === this.props.guesses) {
             return true;
         }
 
