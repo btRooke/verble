@@ -81,15 +81,23 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         if (res?.message_type?.endsWith("Transcript")) {
             console.log(`Received transcript: ${res.text}`);
 
+            if (res.message_type === "FinalTranscript") {
+                phrase_cb(res.text);
+            }
+
+            let matched = false;
+
             for (const [index, word] of res.words.entries()) {
                 // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
+                    matched = true;
                     let guess = res.words[index + 1].text.toLowerCase();
                     prime_cb(guess);
                 }
 
                 // Play guess
                 else if (play_keywords.includes(word.text.toLowerCase())) {
+                    matched = true;
                     play_cb();
 
                     if (finish_cb()) {
@@ -98,15 +106,13 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                 }
             }
 
-
-            if (res.text.length > 0) {
+            if (res.text.length > 0 && !matched) {
                 err_cb();
             }
 
         }
 
         else if (res?.hasOwnProperty("error")) {
-            socket.close();
             alertHandler(res.error);
         }
 
