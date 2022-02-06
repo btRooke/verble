@@ -46,7 +46,9 @@ class Verble extends React.Component {
 
         // Get all valid words
         fetch(valid_guesses)
+
         .then(guess_res => guess_res.text())
+        
         .then(guesses => {
             fetch(valid_answers)
             .then(answer_res => answer_res.text())
