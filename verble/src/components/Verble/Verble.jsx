@@ -30,8 +30,6 @@ const SAMPLE_RATE = 16000;
 
 class Verble extends React.Component {
 
-    words = new Set();
-
     constructor(props) {
 
         super(props);
@@ -44,7 +42,7 @@ class Verble extends React.Component {
     }
 
     componentDidMount() {
-        let valid_guesses = new Set();
+        let valid_words = new Set();
 
         // Get all valid words
         fetch(valid_guesses)
@@ -54,11 +52,11 @@ class Verble extends React.Component {
             .then(answer_res => answer_res.text())
             .then(answers => {
 
-                guesses.split(/(?:\r?\n)+/).forEach(word => valid_guesses.add(word.trim()));
-                answers.split(/(?:\r?\n)+/).forEach(word => valid_guesses.add(word.trim()));
-                console.log(`Loaded ${valid_guesses.size} words`);
+                guesses.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
+                answers.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
+                console.log(`Loaded ${valid_words.size} words`);
         
-                listen(TOKEN_URL, SAMPLE_RATE, (word, valid_guesses) => this.prime(word, valid_guesses), () => this.play(), () => this.finish());
+                listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word, valid_words), () => this.play(), () => this.finish());
             });
         });
     }
