@@ -2,9 +2,12 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
-import example from "./audio";
+import Audio from "./Audio";
 
 import "./Verble.css";
+
+const TOKEN_URL = "http://localhost:3001";
+const SAMPLE_RATE = 16000;
 
 function TestBox(props) {
 
@@ -31,6 +34,10 @@ class Verble extends React.Component {
             words: []
         }
 
+    }
+
+    componentDidMount() {
+        Audio.listen(TOKEN_URL, SAMPLE_RATE, word => this.prime(word), () => this.play());
     }
 
     play() {
