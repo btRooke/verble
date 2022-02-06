@@ -25,12 +25,13 @@
     padding: 5px 8px 5px 8px;
     cursor: pointer;
     user-select: none;
+    border-radius: 10px;
+
 }
 
 .Modal-closeButton:hover {
     background-color: rgb(158, 158, 158);
     transition: 250ms;
-    border-radius: 10px;
 }
 
 .Modal-inner {
@@ -43,8 +44,8 @@
 
     display: grid;
     grid-gap: 0;
-    grid-template-columns: 35px auto 35px;
-    grid-template-rows: 35px auto 35px;
+    grid-template-columns: 45px auto 45px;
+    grid-template-rows: 45px auto 45px;
 
 }
 

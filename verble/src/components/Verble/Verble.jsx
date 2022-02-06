@@ -2,8 +2,8 @@ import React from "react";
 
 import Header from "../Header/Header";
 import GameGrid from "../GameGrid/GameGrid";
-//import Modal from "../Modal/Modal";
-import listen from "./Audio";
+import Modal from "../Modal/Modal";
+import listen, { setalertHandler }from "./Audio";
 
 import "./Verble.css";
 
@@ -12,22 +12,27 @@ import solutions from "./wordle_solutions.txt";
 import valid_guesses from "./wordle_guesses.txt";
 import valid_answers from "./wordle_answers.txt";
 
-const TOKEN_URL = "token";
+const TOKEN_URL = "https://verble.herokuapp.com/token";
 const SAMPLE_RATE = 16000;
 
-/*function TestBox(props) {
+function Indicator(props) {
+
+    if (props.error) {
+        setTimeout(
+            () => props.resetCb(),
+            400
+        );
+    }
 
     return (
 
-        <div>
-            <input type="text" id="word"/>
-            <button onClick={() => props.primeHandler(document.querySelector("#word").value)}>prime</button>
-            <button onClick={() => props.playHandler()}>play</button>
+        <div className={`Verble-micContainer ${props.error ? "Verble-error" : ""}`}>
+            <span class="material-icons Verble-mic">mic</span>
         </div>
-
+        
     );
-
-}*/
+    
+}
 
 class Verble extends React.Component {
 
@@ -39,7 +44,9 @@ class Verble extends React.Component {
             target: null,
             finished: false,
             primedWord: null,
-            words: []
+            words: [],
+            modalMessage: null,
+            vocalError: false
         }
 
         let today = new Date().getTime() - 18000000;
@@ -53,12 +60,17 @@ class Verble extends React.Component {
         }));
     }
 
+    vocalError() {
+        this.setState({vocalError: true});
+    }
+
     componentDidMount() {
         let valid_words = new Set();
 
         const prime_cb = word => this.prime(word, valid_words);
         const play_cb = () => this.play();
-        const finish_cb = () => this.finish();
+        const finish_cb = () => this.finish(); 
+        const err_cb = () => this.vocalError();
 
         // Get all valid words and solutions
         fetch(valid_guesses)
@@ -71,9 +83,11 @@ class Verble extends React.Component {
                 answers.split(/(?:\r?\n)+/).forEach(word => valid_words.add(word.trim()));
                 console.log(`Loaded ${valid_words.size} words`);
         
-                listen(TOKEN_URL, SAMPLE_RATE, prime_cb, play_cb, finish_cb);
+                listen(TOKEN_URL, SAMPLE_RATE, prime_cb, play_cb, finish_cb, err_cb);
             });
         });
+
+        setalertHandler(msg => this.setState({modalMessage: msg}));
     }
 
     prime(word, valid_words) {
@@ -117,6 +131,22 @@ class Verble extends React.Component {
 
     }
 
+    renderModal() {
+
+        if (this.state.modalMessage) {
+
+            return (
+
+                <Modal emptyHandler={() => this.setState({modalMessage: null})}>
+                    <div>{this.state.modalMessage}</div>
+                </Modal> 
+
+            );
+
+        }
+
+    }
+
     render() {
         if (this.state.target === null) {
             return null;
@@ -129,16 +159,14 @@ class Verble extends React.Component {
                 <Header />
 
                 <div className="Verble-gridContainer">
+                    <Indicator error={this.state.vocalError} resetCb={() => this.setState({vocalError: false})}/>
                     <GameGrid primedWord={this.state.primedWord} words={this.state.words} target={this.state.target} guesses={this.props.guesses}/>
                 </div>
 
-                {/* 
-                <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/>
+                
+                {/* <TestBox playHandler={() => this.play()} primeHandler={word => this.prime(word)}/> */}
 
-                <Modal>
-                    <div style={{height: "100px", width: "100px"}}>test</div>
-                </Modal> 
-                */}
+                {this.renderModal()}               
 
             </div>
 

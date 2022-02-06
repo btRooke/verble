@@ -13,7 +13,7 @@ class Modal extends React.Component {
                 <div className="Modal-inner">
 
                     <div className="Modal-closeContainer Modal-gridCentre">
-                        <div onClick={() => this.hide()} className="Modal-closeButton">X</div>
+                        <div onClick={this.props.emptyHandler} className="Modal-closeButton"><span class="material-icons">close</span></div>
                     </div>
 
                     <div className="Modal-inner-inner">
