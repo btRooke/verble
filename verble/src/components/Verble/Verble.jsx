@@ -61,9 +61,9 @@ class Verble extends React.Component {
         });
     }
 
-    prime(word, valid_guesses) {
+    prime(word, valid_words) {
 
-        if (word.length === this.props.target.length && valid_guesses.has(word)) {
+        if (word.length === this.props.target.length && valid_words.has(word)) {
             this.setState( { primedWord: word } );
             return true;
         }
