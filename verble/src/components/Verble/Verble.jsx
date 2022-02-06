@@ -8,7 +8,7 @@ import listen, { setalertHandler }from "./Audio";
 import "./Verble.css";
 
 // Alphabetised Wordle data sets from https://gist.github.com/cfreshman
-import solutions from "./words_solutions.txt";
+import solutions from "./wordle_solutions.txt";
 import valid_guesses from "./wordle_guesses.txt";
 import valid_answers from "./wordle_answers.txt";
 
