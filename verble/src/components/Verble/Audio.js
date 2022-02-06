@@ -38,6 +38,7 @@ const handleAudioStream = (socket, stream, samples) => {
 }
 
 export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb) {
+
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
         alert("Browser does not support required microphone access method");
