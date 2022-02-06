@@ -50,7 +50,9 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
     let data;
 
     try {
-        const response = await fetch(token_url);
+        const response = await fetch(token_url, {
+            mode: "cors"
+        });
         data = await response.json();
     }
     catch {
@@ -91,7 +93,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                     if (finish_cb()) {
                         socket.close();
                     }
-                    
+
                     break;
                 }
             }
