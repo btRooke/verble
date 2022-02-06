@@ -1,7 +1,7 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
-const prime_keywords = ["guess, try"];
-const play_keywords = ["cool, good, submit, go, confirm, okay"];
+const prime_keywords = ["guess", "try"];
+const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay"];
 
 const handleAudioStream = (socket, stream, samples) => {
     let recorder = new RecordRTCPromisesHandler(stream, {
@@ -23,9 +23,7 @@ const handleAudioStream = (socket, stream, samples) => {
                 // Data must be sent as B64
                 if (socket && socket.readyState === socket.OPEN) {
                     socket.send(JSON.stringify({ 
-                        audio_data: base64data.split("base64,")[1],
-                        punctuate: false,
-                        format_text: false
+                        audio_data: base64data.split("base64,")[1]
                     }));
                 }
             };
@@ -79,13 +77,15 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
             for (const [index, word] of res.words.entries()) {
                 // Prime guess
                 if (prime_keywords.includes(word.text.toLowerCase()) && index + 1 < res.words.length) {
-                    let guess = res.words[index + 1].text.toLowerCase();     
+                    let guess = res.words[index + 1].text.toLowerCase();
+                    console.log(guess);
                     prime_cb(guess);
                     break;
                 }
 
                 // Play guess
                 else if (play_keywords.includes(word.text.toLowerCase())) {
+                    console.log("Playing guess")
                     play_cb();
 
                     if (finish_cb()) {
