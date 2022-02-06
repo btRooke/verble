@@ -1,7 +1,13 @@
 import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
-const prime_keywords = ["guess", "try", "use"];
+const prime_keywords = ["guess", "try"];
 const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay"];
+
+let alertHandler = msg => alertHandler(msg);
+
+export function setalertHandler(func) {
+    alertHandler = func;
+}
 
 const handleAudioStream = (socket, stream, samples) => {
     let recorder = new RecordRTCPromisesHandler(stream, {
@@ -37,11 +43,11 @@ const handleAudioStream = (socket, stream, samples) => {
     return recorder;
 }
 
-export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb) {
+export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, err_cb) {
 
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
-        alert("Browser does not support required microphone access method");
+        alertHandler("Browser does not support required microphone access method");
         return;
     }
 
@@ -53,7 +59,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         data = await response.json();
     }
     catch {
-        alert("Failed to get session token");
+        alertHandler("Failed to get session token");
         return;
     }
     
@@ -94,11 +100,17 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                     break;
                 }
             }
+
+
+            if (res.text.length > 0) {
+                err_cb();
+            }
+
         }
 
         else if (res?.hasOwnProperty("error")) {
             socket.close();
-            alert(res.error);
+            alertHandler(res.error);
         }
 
         return false;
@@ -119,6 +131,6 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
     socket.onopen = () => {
         navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => recorder = handleAudioStream(socket, stream, samples))
-        .catch(() => alert("Permission to use the microphone must be granted to access this page"));
+        .catch(() => alertHandler("Permission to use the microphone must be granted to access this page"));
     };
 }
