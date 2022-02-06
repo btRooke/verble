@@ -2,7 +2,6 @@ import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 
 const prime_keywords = ["guess", "try", "use", "pick", "consider", "perhaps"];
 const play_keywords = ["cool", "good", "submit", "go", "confirm", "okay", "nice"];
-const close_keywords = ["close", "exit", "quit"];
 
 let alertHandler = msg => alertHandler(msg);
 
@@ -44,7 +43,7 @@ const handleAudioStream = (socket, stream, samples) => {
     return recorder;
 }
 
-export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, phrase_cb, close_cb, err_cb) {
+export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, phrase_cb, err_cb) {
 
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
@@ -101,11 +100,6 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                         socket.close();
                     }
                 }
-
-                // Close modal message
-                else if (close_keywords.includes(word.text.toLowerCase())) {
-                    close_cb();
-                }
             }
 
             if (res.text.length > 0) {
@@ -137,12 +131,5 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
         navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => recorder = handleAudioStream(socket, stream, samples))
         .catch(() => alertHandler("Permission to use the microphone must be granted to access this page"));
-
-        alertHandler(
-            "VERBLE\n\n" + 
-            "To prepare a guess, say a prepare keyword followed by your guess. If it is a valid guess, it will appear in the grid\n" +
-            `Valid prepare keywords are: ${prime_keywords.join(", ")}\n\n` +
-            `To submit the guess, say one of: ${play_keywords.join(", ")}\n\n` +
-            `These dialogues can also be voice controlled - try closing it using one of: ${close_keywords.join(", ")}`);
     };
 }
