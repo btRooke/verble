@@ -91,7 +91,7 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                     if (finish_cb()) {
                         socket.close();
                     }
-                    
+
                     break;
                 }
             }
