@@ -44,7 +44,7 @@ const handleAudioStream = (socket, stream, samples) => {
     return recorder;
 }
 
-export default async function listen(token_url, samples, prime_cb, play_cb, finish_cb, phrase_cb, close_cb, err_cb) {
+export default async function listen(token_url, samples, prime_cb, play_cb, phrase_cb, finish_cb, close_cb, err_cb) {
 
     // Ensure the microphone can be accessed
     if (!navigator.mediaDevices.getUserMedia) {
@@ -116,10 +116,10 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
             if (res.text.length > 0 && !matched) {
                 err_cb();
             }
+
         }
 
         else if (res?.hasOwnProperty("error")) {
-            socket.close();
             alertHandler(res.error);
         }
 
