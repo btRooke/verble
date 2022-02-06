@@ -47,8 +47,17 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
     }
 
     // Query token server for session token
-    const response = await fetch(token_url);
-    const data = await response.json();
+    let data;
+    
+    try {
+        const response = await fetch(token_url);
+        data = await response.json();
+    }
+    catch {
+        alert("Failed to get session token");
+        return;
+    }
+    
 
     // Create WebSocket for AssemblyAI realtime
     let params = {
