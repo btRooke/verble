@@ -28,7 +28,7 @@
 .Verble-succ {
     background-color: green;
     transform-origin: 50% 50%;
-    animation: jump 300ms linear alternate infinite;
+    animation: jump 600ms linear alternate infinite;
 }
 
 .Verble-error {

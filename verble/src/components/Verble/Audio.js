@@ -148,18 +148,11 @@ export default async function listen(token_url, samples, prime_cb, play_cb, fini
                 <h2>VERBLE</h2> 
 
                 <br/>
-                <br/>
                 
-                <p>To prepare a guess, say a prepare keyword followed by your guess.</p> <br/>
-                <p>If it is a valid guess, it will appear in the grid</p> <br/>
-                <p>Valid keywords are: {prime_keywords.join(", ")}</p> <br/>
-
-                <br/>
-
-                <p>To submit the guess, say one of: {play_keywords.join(", ")}</p> <br/>
-                
-                <br/>
-                
+                <p>To prepare a guess, say a prepare keyword followed by your guess.</p>
+                <p>If it is a valid guess, it will appear in the grid</p>
+                <p>Valid keywords are: {prime_keywords.join(", ")}</p>
+                <p>To submit the guess, say one of: {play_keywords.join(", ")}</p>                
                 <p>These dialogues can also be voice controlled while the microphone is recording - try closing it using one of: {close_keywords.join(", ")}</p>
             </div>
         ));

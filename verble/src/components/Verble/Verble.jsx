@@ -17,11 +17,12 @@ const SAMPLE_RATE = 16000;
 
 function Indicator(props) {
 
+    console.log(props);
 
     if (props.succ) {
         setTimeout(
             () => props.resetCb(),
-            400
+            650
         );
     }
 
