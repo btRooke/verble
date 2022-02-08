@@ -1,5 +1,7 @@
 # Hack the Burgh VIII - Verble!
 
+Built in 24 hours at [Hack the Burgh](https://devpost.com/software/verble).
+
 ## Etymology
 
 It's [wordle](https://www.powerlanguage.co.uk/wordle/) but verbal, hence _verble_.
