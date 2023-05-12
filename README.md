@@ -8,7 +8,7 @@ It's [wordle](https://www.powerlanguage.co.uk/wordle/) but verbal, hence _verble
 
 ~~Now (thanks to domain.com) it's hosted at [verble.tech](https://verble.tech).~~
 
-That domain expired so now it's on GitHub pages - we might have run out of credits on AssemblyAI's STT API though...
+That domain expired - should really put it on GitHub pages...
 
 ## Inspiration
 
