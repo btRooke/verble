@@ -6,7 +6,9 @@ Built in 24 hours at [Hack the Burgh](https://devpost.com/software/verble).
 
 It's [wordle](https://www.powerlanguage.co.uk/wordle/) but verbal, hence _verble_.
 
-Now (thanks to domain.com) it's hosted at [verble.tech](https://verble.tech).
+~~Now (thanks to domain.com) it's hosted at [verble.tech](https://verble.tech).~~
+
+That domain expired so now it's on GitHub pages - we might have run out of credits on AssemblyAI's STT API though...
 
 ## Inspiration
 
